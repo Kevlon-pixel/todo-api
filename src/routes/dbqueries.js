@@ -1,4 +1,4 @@
-const pool = require('./database.js');
+const pool = require('../database/todolist.js');
 const Express = require('express');
 const router = Express.Router();
 

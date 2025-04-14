@@ -6,7 +6,7 @@ const express = require('express'); // express
 const app = express();
 const todoRouter = require('./src/routes/todo.js'); // todo
 const PORT = process.env.PORT;
-const dbRouter = require('./src/database/queries.js'); // запросы
+const dbRouter = require('./src/routes/dbqueries.js'); // запросы
 
 // routers
 app.use(express.json());
