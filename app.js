@@ -1,17 +1,19 @@
-require("dotenv").config()
-const todoRouter = require('./src/routes/todo.js'); 
-const swaggerJsdoc = require("swagger-jsdoc");
-const express = require('express');
-const app = express();
+// подключение модулей
+require("dotenv").config() // env
+const swaggerJsdoc = require("swagger-jsdoc"); // swagger
 const swaggerUi = require('swagger-ui-express');
-const PORT = 3000;
+const express = require('express'); // express
+const app = express();
+const todoRouter = require('./src/routes/todo.js'); // todo
+const PORT = process.env.PORT;
+const dbRouter = require('./src/database/queries.js'); // запросы
 
-
+// routers
 app.use(express.json());
 app.use('/api',todoRouter);
+app.use('/api',dbRouter);
 
-
-
+// подключение swagger
 const options = {
     definition: {
       openapi: '3.0.0',
@@ -29,8 +31,6 @@ const options = {
     apis: ['./src/schemas/schemas.js'],
   };
   
-
-
 const specs = swaggerJsdoc(options);
 app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(specs));
 
