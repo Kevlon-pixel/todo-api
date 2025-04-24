@@ -3,9 +3,16 @@ const Express = require('express');
 const router = Express.Router();
 
 // основные запросы todo
-router.get('/todo_watch', async (req, res) => {
+router.get('/todo_watch',
+   async (req, res) => {
     try {
-      const result = await pool.query('SELECT * FROM todos');
+      const {user_id} = req.body;
+
+      const result = await pool.query(
+        `SELECT * FROM tasks
+         WHERE user_id = $1`,
+        [user_id]
+      );
       res.json(result.rows);
     }
     catch (error) {
@@ -16,10 +23,10 @@ router.get('/todo_watch', async (req, res) => {
   
 router.post('/todo_insert', async (req, res) => {
     try {
-      const {title} = req.body;
+      const {user_id, title} = req.body;
       const result = await pool.query(
-        'INSERT INTO todos (title) VALUES ($1) RETURNING *',
-        [title]
+        'INSERT INTO tasks (user_id, title) VALUES ($1, $2) RETURNING *',
+        [user_id, title]
       );
       res.status(201).json(result.rows[0]);
     }

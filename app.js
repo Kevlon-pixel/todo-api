@@ -5,13 +5,13 @@ const swaggerUi = require('swagger-ui-express');
 const express = require('express'); // express
 const app = express();
 const todoRouter = require('./src/routes/todo.js'); // todo
+const authRouter = require('./src/routes/auth.js') // auth
 const PORT = process.env.PORT;
-const dbRouter = require('./src/routes/dbqueries.js'); // запросы
 
 // routers
 app.use(express.json());
 app.use('/api',todoRouter);
-app.use('/api',dbRouter);
+app.use('/api',authRouter);
 
 // подключение swagger
 const options = {
